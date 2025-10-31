@@ -1,0 +1,106 @@
+/* Кастомные цвета для админки - Blue #2b61ff */
+:root {
+    --bs-primary: #2b61ff;
+    --bs-primary-rgb: 43, 97, 255;
+}
+
+/* Primary цвет */
+.bg-primary,
+.btn-primary,
+.badge.bg-primary {
+    background-color: #2b61ff !important;
+    border-color: #2b61ff !important;
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+    background-color: #1e4acc !important;
+    border-color: #1a42b8 !important;
+}
+
+.text-primary {
+    color: #2b61ff !important;
+}
+
+/* Градиенты */
+.bg-gradient-primary {
+    background: linear-gradient(135deg, #2b61ff 0%, #5580ff 100%) !important;
+}
+
+/* Sidebar logo */
+.sidebar-icon.bg-gradient-primary {
+    background: linear-gradient(135deg, #2b61ff 0%, #5580ff 100%) !important;
+}
+
+/* Активный пункт меню */
+.nav-link.active {
+    background-color: rgba(43, 97, 255, 0.1) !important;
+    color: #2b61ff !important;
+}
+
+/* Links */
+a {
+    color: #2b61ff;
+}
+
+a:hover {
+    color: #1e4acc;
+}
+
+/* Focus состояния */
+.form-control:focus,
+.form-select:focus {
+    border-color: #2b61ff;
+    box-shadow: 0 0 0 0.25rem rgba(43, 97, 255, 0.25);
+}
+
+/* Checkboxes и switches */
+.form-check-input:checked {
+    background-color: #2b61ff;
+    border-color: #2b61ff;
+}
+
+.form-check-input:focus {
+    border-color: #2b61ff;
+    box-shadow: 0 0 0 0.25rem rgba(43, 97, 255, 0.25);
+}
+
+/* Pagination */
+.page-link:hover {
+    color: #2b61ff;
+}
+
+.page-item.active .page-link {
+    background-color: #2b61ff;
+    border-color: #2b61ff;
+}
+
+/* Action Icons in tables */
+.table .text-primary:hover,
+.table .text-danger:hover {
+    opacity: 0.7;
+    transition: opacity 0.2s;
+}
+
+.table .material-symbols-rounded {
+    vertical-align: middle;
+}
+
+/* Card footer for pagination */
+.card-footer {
+    background-color: #f8f9fa;
+    border-top: 1px solid rgba(0, 0, 0, .125);
+    padding: 1rem 1.5rem;
+}
+
+/* Убираем капитализацию в кнопках */
+.btn {
+    text-transform: none !important;
+}
+
+/* Активный элемент dropdown (переключатель темы) */
+.dropdown-item.active,
+.dropdown-item:active {
+    background-color: #2b61ff !important;
+    color: white !important;
+}
