@@ -5,7 +5,7 @@
         <div class="row section-title">
           <div class="col-md-7 section-title__main">
             <div class="section-title__mark">
-              Официальный договор, аккредитация ГИТ
+              Официальный договор, аккредитация РОСТРУД
             </div>
             <h1 class="section-title__header">
               <span>Ваши проекты — наши люди,</span><br />
@@ -32,15 +32,15 @@
         >
           <div class="wide-pic-with-subscription__prompt">
             <div>
-              Подберём для вас водителей (C, D, E), сварщиков, электриков и
+                Подберём для вас водителей, машинистов, сварщиков, электриков и
               широкий
               <div class="d-none d-md-block"></div>
-              спектр других специалистов для вахтовых объектов
+                спектр других специалистов для вахтовых объектов
             </div>
           </div>
         </div>
       </section>
-      
+
       <section class="section">
         <div class="row section-title">
           <div class="col-md-7 section-title__main">
@@ -63,8 +63,7 @@
                 Быстрый подбор персонала
               </h4>
               <p class="decoration-grid__content-text">
-                Закрываем заявки за 3-7 дней. В базе проверенные специалисты,
-                готовые к вахте
+                  Быстрый подбор персонала Закрываем заявки за 3-7 дней. В базе только проверенные специалисты, с опытом работы вахтовым методом.
               </p>
             </div>
             <div class="decoration-grid__item-decoration">
@@ -77,8 +76,7 @@
                 Юридическое сопровождение
               </h4>
               <p class="decoration-grid__content-text">
-                Берём на себя договоры, учёт и налоги. Всё оформляем официально
-                и прозрачно
+                  Берем на себя все кадровые, бухгалтерские и юридические вопросы. Всё оформляем официально и прозрачно.
               </p>
             </div>
             <div class="decoration-grid__item-decoration">
@@ -101,7 +99,7 @@
           </div>
           <div class="col-md-3 decoration-grid__item">
             <div class="decoration-grid__item-content">
-              <h4 class="decoration-grid__content-title">Аккредитация ГИТ</h4>
+              <h4 class="decoration-grid__content-title">Аккредитация РОСТРУД</h4>
               <p class="decoration-grid__content-text">
                 ООО «РЕЗАРЕСУРС» аккредитовано до 2027 года. Работаем официально
                 и открыто
@@ -113,7 +111,7 @@
           </div>
         </div>
       </section>
-      
+
       <section class="section">
         <div class="row section-title">
           <div class="col-md-7 section-title__main">
@@ -186,7 +184,7 @@
           </div>
         </div>
       </section>
-      
+
       <section class="section">
         <div class="row section-title">
           <div class="col-md-7 section-title__main">
@@ -335,7 +333,7 @@
           </div>
         </div>
       </section>
-      
+
       <section class="section">
         <div class="row section-title">
           <div class="col-md-7 section-title__main">
@@ -375,7 +373,7 @@
           </div>
         </div>
       </section>
-      
+
       <section class="section">
         <div class="row section-title">
           <div class="col-md-7 section-title__main">
@@ -406,14 +404,13 @@
           </div>
         </div>
       </section>
-      
+
       <section class="section">
         <div class="row section-title">
           <div class="col-md-8 section-title__main">
             <div class="section-title__mark">Услуги</div>
             <h1 class="section-title__header section-title__header_second">
-              Услуги по предоставлению квалифицированных кадров и полному
-              юридическому сопровождению
+                Подбираем водителей и машинистов с опытом северных маршрутов
             </h1>
           </div>
         </div>
@@ -441,7 +438,7 @@
           </div>
         </div>
       </section>
-      
+
       <section class="section">
         <div class="row section-title">
           <div class="col-md-8 section-title__main">
@@ -469,7 +466,7 @@
           </div>
         </div>
       </section>
-      
+
       <section class="section">
         <div class="row section-title">
           <div class="col-md-9 section-title__main">
@@ -497,7 +494,7 @@
           </div>
         </div>
       </section>
-      
+
       <section class="section">
         <div class="row section-title">
           <div class="col-md-6 section-title__main">
@@ -536,7 +533,7 @@
           </div>
         </div>
       </section>
-      
+
       <section class="section">
         <div class="row section-title">
           <div class="col-md-6 mt section-title__main">
@@ -564,24 +561,47 @@
           </div>
           <div class="col section-title__second">
             <div class="native-accardeon">
-              <details class="native-accardeon__slide" name="faq" v-for="faq in faqs" :key="faq.question" :open="faq.open">
-                <summary class="native-accardeon__summary">
+              <div 
+                class="native-accardeon__slide" 
+                v-for="faq in faqs" 
+                :key="faq.question"
+              >
+                <button
+                  class="native-accardeon__summary"
+                  @click="toggleFaq(faq)"
+                  :aria-expanded="faq.isOpen"
+                  type="button"
+                >
                   <div class="native-accardeon__summary-icon">
                     <img :src="imageUrl(`faq/${faq.icon}.svg`)" alt="" />
                   </div>
                   <div class="native-accardeon__summary-title">
                     {{ faq.question }}
                   </div>
-                  <div class="native-accardeon__summary-toggle"></div>
-                </summary>
-                <div class="native-accardeon__content" v-html="faq.answer"></div>
-              </details>
+                  <div 
+                    class="native-accardeon__summary-toggle"
+                    :class="{ 'native-accardeon__summary-toggle_open': faq.isOpen }"
+                  ></div>
+                </button>
+                <transition 
+                  name="accordion"
+                  @enter="onEnter"
+                  @leave="onLeave"
+                >
+                  <div 
+                    v-show="faq.isOpen"
+                    class="native-accardeon__content-wrapper"
+                  >
+                    <div class="native-accardeon__content" v-html="faq.answer"></div>
+                  </div>
+                </transition>
+              </div>
             </div>
           </div>
         </div>
       </section>
-      
-      <section class="section">
+
+      <section class="section section-smooth">
         <div class="row section-title">
           <div class="col-md-6 section-title__main">
             <div class="section-title__mark">Аккредитация</div>
@@ -610,9 +630,9 @@
         </div>
       </section>
     </div>
-    
+
     <section
-      class="section section_red section_red-decoration section_overlay inverse-colors"
+      class="section section_red section_red-decoration section_overlay inverse-colors application-form-section"
     >
       <div class="container">
         <div class="row section-title section-title_less">
@@ -814,37 +834,37 @@ export default {
         {
           question: 'Чем аутстаффинг отличается от аутсорсинга?',
           icon: 'faq1',
-          open: false,
+          isOpen: false,
           answer: '<p>Аутстаффинг — это передача в управление уже подобранного персонала, который остаётся штатным сотрудником аутстаффинговой компании (в нашем случае — ООО "РЕЗАРЕСУРС"). Заказчик управляет работой сотрудников, но не является их работодателем. Мы берём на себя все кадровые, налоговые и юридические обязательства.</p><p>Аутсорсинг — это передача на внешнее исполнение целого функционала или процесса (например, бухгалтерия, IT-поддержка, охрана). Результат работы — обязанность исполнителя, а не отдельных сотрудников.</p><p>👉 <strong>В чём разница:</strong><br>При аутстаффинге вы управляете людьми, при аутсорсинге — вы получаете результат работы.</p>'
         },
         {
           question: 'Кто платит налоги и взносы?',
           icon: 'faq2',
-          open: true,
+          isOpen: true,
           answer: '<p>Все налоги и страховые взносы платит ООО "РЕЗАРЕСУРС" — как работодатель, на которого оформлены сотрудники.</p><span>Это включает:</span><ul><li>НДФЛ (13%),</li><li>Страховые взносы в ПФР, ФСС, ФОМС (до 30% от ФОТ),</li><li>Отпускные, больничные, пособия,</li><li>Компенсации при увольнении</li></ul><p>Вы платите единую фиксированную сумму за услуги аутстаффинга — без дополнительных обязательных платежей. Это позволяет снизить налоговую нагрузку и избежать административной нагрузки.</p>'
         },
         {
           question: 'Что делать, если сотрудник не вышел на вахту?',
           icon: 'faq3',
-          open: false,
+          isOpen: false,
           answer: '<p>Если сотрудник не выходит на вахту по уважительной или неуважительной причине — мы оперативно организуем замену.</p><p><strong>Мы:</strong></p><ul><li>Контролируем дисциплину и адаптацию персонала,</li><li>Ведём резервную базу квалифицированных кадров,</li><li>Гарантируем быструю подмену при пропусках или увольнениях.</li></ul><p>Вы своевременно сообщаете нам о ситуации — мы решаем её в кратчайшие сроки, не выставляя дополнительных счетов.</p>'
         },
         {
           question: 'Как быстро вы подбираете персонал?',
           icon: 'faq4',
-          open: false,
+          isOpen: false,
           answer: '<p>Мы подбираем персонал в течение 3–7 рабочих дней с момента подачи заявки, в зависимости от специальности и региона.</p><p><strong>Благодаря:</strong></p><ul><li>Наличию базы проверенных кандидатов,</li><li>Опыту в подборе для северных и удалённых регионов,</li><li>Готовности к работе вахтовым методом,</li></ul><p>мы обеспечиваем быстрое закрытие вакансий даже в сложнодоступных локациях: Якутия, Ямал, Забайкалье и др.</p>'
         },
         {
           question: 'Есть ли гарантия качества?',
           icon: 'faq5',
-          open: false,
+          isOpen: false,
           answer: '<p>Да, мы гарантируем качество подбора и стабильность персонала:</p><ul><li>Все кандидаты проходят тщательный отбор: проверка документов, собеседование, оценка опыта.</li><li>Мы контролируем дисциплину и адаптацию на объекте.</li><li>При необходимости — бесплатно заменяем сотрудника.</li><li>У нас есть резервная база кадров.</li><li>Мы несём полную юридическую и административную ответственность.</li></ul><p>Наша цель — чтобы вы получили надёжного специалиста, который будет эффективно работать на вашем проекте.</p>'
         },
         {
           question: 'Какие у вас юридические основания для деятельности?',
           icon: 'faq6',
-          open: false,
+          isOpen: false,
           answer: '<p>ООО "РЕЗАРЕСУРС" официально аккредитовано для осуществления деятельности по предоставлению труда работников.</p><p>Аккредитация выдана Государственной инспекцией труда в Иркутской области<br>(приказ № А-7/38 от 24.12.2024 г.),<br>действует до 24 декабря 2027 года.</p><p><strong>Это означает, что:</strong></p><ul><li>Мы ведём легальную деятельность в сфере аутстаффинга,</li><li>Соблюдаем требования Трудового кодекса РФ,</li><li>Имеем право оформлять сотрудников и предоставлять их другим компаниям.</li></ul><p>Вы работаете с нами на законных основаниях — без рисков для вашего бизнеса.</p>'
         }
       ],
@@ -939,7 +959,7 @@ export default {
         this.formData.duration,
         this.formData.employees
       ];
-      
+
       const filledFields = fields.filter(field => field && String(field).trim()).length;
       this.sliderValue = Math.floor((filledFields / fields.length) * 100);
     },
@@ -967,16 +987,86 @@ export default {
         console.error('Ошибка отправки заявки:', error);
         // Можно вывести ненавязчивое сообщение об ошибке
       }
+    },
+    toggleFaq(faq) {
+      faq.isOpen = !faq.isOpen;
+    },
+    onEnter(el) {
+      // Устанавливаем начальную высоту
+      el.style.height = '0';
+      el.style.opacity = '0';
+      
+      // Получаем реальную высоту контента
+      const height = el.scrollHeight;
+      
+      // Используем requestAnimationFrame для плавности
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          el.style.height = height + 'px';
+          el.style.opacity = '1';
+        });
+      });
+    },
+    onLeave(el) {
+      // Устанавливаем начальную высоту
+      const height = el.scrollHeight;
+      el.style.height = height + 'px';
+      el.style.opacity = '1';
+      
+      // Используем requestAnimationFrame для плавности
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          el.style.height = '0';
+          el.style.opacity = '0';
+        });
+      });
+    },
+    initFormVisibility() {
+      const formSection = this.$el.querySelector('.application-form-section');
+      if (!formSection) return;
+      
+      // Используем Intersection Observer для плавного появления
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            // Добавляем класс с небольшой задержкой для плавности
+            setTimeout(() => {
+              entry.target.classList.add('visible');
+            }, 50);
+            observer.unobserve(entry.target);
+          }
+        });
+      }, {
+        threshold: 0.1, // Срабатывает когда 10% элемента видно
+        rootMargin: '50px' // Начинает анимацию немного раньше
+      });
+      
+      observer.observe(formSection);
     }
   },
   mounted() {
     this.recalculateSlider();
     this.loadSeoTags();
+    // Плавное появление формы заявки при прокрутке
+    this.$nextTick(() => {
+      this.initFormVisibility();
+    });
   }
 }
 </script>
 
 <style>
+/* Плавная прокрутка для всей страницы */
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
 /* Глобальные стили для радиокнопок - убираем галочку, оставляем только круг с градиентом */
 .native-input__input-radio:checked::after {
   display: none !important;
@@ -985,28 +1075,135 @@ export default {
 
 /* Плавная анимация для FAQ аккордеона */
 .native-accardeon__slide {
-  transition: all 0.5s ease;
+  border-bottom: solid 1px var(--main-border-color);
+  overflow-anchor: none;
+}
+
+/* Стили для кнопки summary */
+.native-accardeon__summary {
+  display: flex;
+  align-items: center;
+  padding: clamp(14px, 1.7177540107cqw, 31px) clamp(9px, 1.0225668449cqw, 18px);
+  gap: clamp(9px, 1.3968983957cqw, 25px);
+  width: 100%;
+  background: none;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  overflow-anchor: none;
+  scroll-margin: 0;
+}
+
+.native-accardeon__summary:hover {
+  background: transparent;
+}
+
+.native-accardeon__summary-icon {
+  width: clamp(26px, 2.5198930481cqw, 46px);
+  height: clamp(26px, 2.5198930481cqw, 46px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border-radius: 3px;
+  transition: background 0.3s ease;
+  flex-shrink: 0;
+}
+
+.native-accardeon__summary-icon img {
+  width: 100%;
+}
+
+.native-accardeon__summary[aria-expanded="true"] .native-accardeon__summary-icon {
+  background: #f8f8f8;
+}
+
+.native-accardeon__summary-title {
+  flex-grow: 1;
+  font-size: var(--text-size-4);
+}
+
+.native-accardeon__summary-toggle {
+  background-image: url(/rez/images/chevron.svg);
+  width: 20px;
+  height: 20px;
+  background-size: clamp(10px, 1.0225668449cqw, 18px);
+  background-repeat: no-repeat;
+  background-position: center;
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  flex-shrink: 0;
+}
+
+.native-accardeon__summary-toggle_open {
+  transform: rotate(180deg);
+}
+
+/* Плавное смещение аккордеона при раскрытии */
+.native-accardeon {
+  border-top: solid 1px var(--main-border-color);
+  overflow-anchor: none;
+}
+
+/* Vue Transition для аккордеона */
+.native-accardeon__content-wrapper {
+  overflow: hidden;
 }
 
 .native-accardeon__content {
-  overflow: hidden;
-  max-height: 0;
-  opacity: 0;
-  transition: max-height 0.5s ease-out, opacity 0.5s ease-out, padding-top 0.5s ease-out, padding-bottom 0.5s ease-out;
+  color: var(--second-text-color);
+  padding: clamp(14px, 1.7177540107cqw, 31px) clamp(9px, 1.0225668449cqw, 18px);
   padding-top: 0;
-  padding-bottom: 0;
 }
 
-.native-accardeon__slide[open] .native-accardeon__content {
-  max-height: 2000px;
+/* Vue Transition анимация */
+.accordion-enter-active,
+.accordion-leave-active {
+  transition: height 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+              opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+}
+
+.accordion-enter-from,
+.accordion-leave-to {
+  height: 0;
+  opacity: 0;
+}
+
+.accordion-enter-to,
+.accordion-leave-from {
   opacity: 1;
-  padding-top: clamp(14px, 1.7177540107cqw, 31px);
-  padding-bottom: clamp(14px, 1.7177540107cqw, 31px);
+}
+
+/* Плавное смещение всех последующих секций при изменении высоты вышестоящих элементов */
+.section {
+  transition: margin-top 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: margin-top, transform;
+  overflow-anchor: none;
+}
+
+/* Специальная анимация для секции аккредитации */
+.section-smooth {
+  transition: margin-top 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+              opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: margin-top, transform, opacity;
+  overflow-anchor: none;
+}
+
+/* Плавное изменение позиции всех элементов при раскрытии аккордеона */
+.container {
+  transition: padding-bottom 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Улучшаем плавность прокрутки во время анимации */
+body {
+  overflow-x: hidden;
 }
 
 /* Плавная анимация для иконки toggle */
 .native-accardeon__summary-toggle {
-  transition: transform 0.5s ease;
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Восстановление маркеров для списков в FAQ */
@@ -1023,6 +1220,20 @@ export default {
 
 .native-accardeon__content ul li::marker {
   color: var(--main-text-color);
+}
+
+/* Плавное появление формы заявки */
+.application-form-section {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: opacity, transform;
+}
+
+.application-form-section.visible {
+  opacity: 1;
+  transform: translateY(0);
 }
 </style>
 
