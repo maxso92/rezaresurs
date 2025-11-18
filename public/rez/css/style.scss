@@ -449,6 +449,68 @@ h1 {
   }
 }
 
+// Специальные стили для формы заявки - перебиваем все остальные фоны
+section.application-form-section.section_red.section_red-decoration,
+.application-form-section.section_red-decoration {
+  background-image: url(/images/Main.png) !important;
+  background-size: cover !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+
+  @include onMobile() {
+    background-position: center !important;
+  }
+}
+
+// Убираем белую полосу между формой и футером на мобильных
+@include onMobile() {
+  section.application-form-section,
+  .application-form-section.section,
+  .application-form-section {
+    margin: 0 !important;
+    margin-bottom: 0 !important;
+    margin-top: 0 !important;
+    padding-bottom: #{fluid-cqw(60, 126, px)} !important;
+  }
+  
+  .home-page {
+    margin: 0 !important;
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+  }
+  
+  .home-page > *:last-child {
+    margin-bottom: 0 !important;
+  }
+  
+  body {
+    margin-bottom: 0 !important;
+  }
+}
+
+// Настраиваем overlay градиент для плавного затемнения к футеру
+section.application-form-section.section_overlay:before,
+.application-form-section.section_overlay:before {
+  background: linear-gradient(180deg, transparent 0%, transparent 50%, rgba(20, 20, 21, 0.7) 85%, var(--block-color-2) 100%) !important;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.application-form-section .container {
+  position: relative;
+  z-index: 2;
+  padding-left: calc(var(--bs-gutter-x) * 0.5) !important;
+  padding-right: calc(var(--bs-gutter-x) * 0.5) !important;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+// Выравниваем row внутри формы заявки с общим контейнером страницы
+.application-form-section .row {
+  margin-left: calc(-0.5 * var(--bs-gutter-x));
+  margin-right: calc(-0.5 * var(--bs-gutter-x));
+}
+
 body .inverse-colors {
   --main-text-color: white;
   --second-text-color: white;
@@ -677,6 +739,7 @@ a {
 
   &__header {
     font-size: var(--text-heading-size-5);
+    color: #E0E0E0;
 
     margin-bottom: #{fluid-cqw(14, 20, px)};
   }
@@ -702,7 +765,7 @@ a {
 
   a {
     display: block;
-    color: var(--main-text-color);
+    color: #E0E0E0;
     text-decoration: none;
     margin-bottom: #{fluid-cqw(10, 11, px)};
   }
@@ -991,11 +1054,12 @@ a {
   & > .counter-item {
     $separator: solid 1px var(--main-border-color);
     padding-left: 25px;
-    &:not(:first-child) {
-      @include onDesktop() {
-        border-left: #{$separator};
-      }
-    }
+    // Убираем вертикальные разделители
+    // &:not(:first-child) {
+    //   @include onDesktop() {
+    //     border-left: #{$separator};
+    //   }
+    // }
     @include onMobile() {
       border-top: #{$separator};
     }

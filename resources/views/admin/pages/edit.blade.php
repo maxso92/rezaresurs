@@ -18,7 +18,7 @@
     <div class="col-lg-8">
         <div class="card">
             <div class="card-body">
-                <form method="POST" action="{{ route('admin.pages.update', $page->id) }}" id="pageForm">
+                <form method="POST" action="{{ route('admin.pages.update', $page->id) }}" id="pageForm" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
                     
@@ -36,7 +36,7 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="alias" class="form-label">Алиас (URL) <span class="text-danger">*</span></label>
+                        <label for="alias" class="form-label">Slug (ЧПУ) <span class="text-danger">*</span></label>
                         <input type="text" 
                                class="form-control @error('alias') is-invalid @enderror" 
                                id="alias" 
@@ -45,6 +45,22 @@
                                required>
                         <div class="form-text">Используется в URL: /{{ $page->alias }}</div>
                         @error('alias')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="redirect_url" class="form-label">
+                            <span class="material-symbols-rounded align-middle me-1" style="font-size: 18px;">open_in_new</span>
+                            Страница для редиректа
+                        </label>
+                        <input type="url" 
+                               class="form-control @error('redirect_url') is-invalid @enderror" 
+                               id="redirect_url" 
+                               name="redirect_url" 
+                               value="{{ old('redirect_url', $page->redirect_url) }}"
+                               placeholder="https://example.com/page">
+                        @error('redirect_url')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
@@ -68,6 +84,35 @@
                                   name="content" 
                                   rows="8">{{ old('content', $page->content) }}</textarea>
                         @error('content')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="cover_image" class="form-label">
+                            <span class="material-symbols-rounded align-middle me-1" style="font-size: 18px;">image</span>
+                            Обложка страницы
+                        </label>
+                        
+                        @if($page->cover_image)
+                            <div class="mb-3">
+                                <img src="{{ asset('storage/' . $page->cover_image) }}" alt="Cover Image" class="img-thumbnail" style="max-width: 300px; height: auto;">
+                                <div class="mt-2">
+                                    <button type="button" class="btn btn-sm btn-danger" onclick="deleteCoverImage({{ $page->id }})">
+                                        <span class="material-symbols-rounded align-middle" style="font-size: 16px;">delete</span>
+                                        Удалить обложку
+                                    </button>
+                                </div>
+                            </div>
+                        @endif
+                        
+                        <input type="file" 
+                               class="form-control @error('cover_image') is-invalid @enderror" 
+                               id="cover_image" 
+                               name="cover_image"
+                               accept="image/jpeg,image/jpg,image/png,image/webp">
+                        <div class="form-text">Форматы: JPG, PNG, WEBP. Максимальный размер: 5 МБ</div>
+                        @error('cover_image')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
@@ -178,6 +223,34 @@
 
 @push('scripts')
 <script>
+    function deleteCoverImage(pageId) {
+        if (!confirm('Удалить обложку?')) {
+            return;
+        }
+        
+        fetch(`/admin/pages/${pageId}/cover`, {
+            method: 'DELETE',
+            headers: {
+                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            redirect: 'manual'
+        })
+        .then(response => {
+            if (response.ok || response.type === 'opaqueredirect' || response.status === 302) {
+                window.location.reload();
+            } else {
+                console.error('Response:', response);
+                alert('Ошибка при удалении обложки');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            window.location.reload();
+        });
+    }
+
     // Транслитерация русских букв в английские
     function transliterate(text) {
         const ru = {

@@ -15,6 +15,8 @@ class Page extends Model
         'seo_social_title',
         'seo_social_description',
         'content',
+        'cover_image',
+        'redirect_url',
         'is_published',
     ];
 

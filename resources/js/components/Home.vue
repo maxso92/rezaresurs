@@ -17,7 +17,7 @@
               Аутстаффинг квалифицированного вахтового персонала по всей России
             </div>
             <div class="button-row">
-              <a href="" class="native-button">
+              <a href="https://t.me/reazaresurs?text=Добрый%20день,%20пишу%20вам%20с%20сайта%20☀%EF%B8%8F" target="_blank" class="native-button">
                 Подобрать персонал бесплатно
               </a>
               <a href="" class="native-button native-button_outline">
@@ -27,7 +27,7 @@
           </div>
         </div>
         <div
-          class="row wide-pic-with-subscription"
+          class="row wide-pic-with-subscription image-fade-in"
           :style="headerImageStyle"
         >
           <div class="wide-pic-with-subscription__prompt">
@@ -56,7 +56,7 @@
             </div>
           </div>
         </div>
-        <div class="row decoration-grid">
+        <div class="row decoration-grid image-fade-in">
           <div class="col-md-3 decoration-grid__item">
             <div class="decoration-grid__item-content">
               <h4 class="decoration-grid__content-title">
@@ -127,7 +127,7 @@
             </div>
           </div>
         </div>
-        <div class="row decoration-grid">
+        <div class="row decoration-grid image-fade-in">
           <div class="col-md-3 decoration-grid__item">
             <div class="decoration-grid__item-decoration">
               <div class="decoration-grid__item-decoration-box">
@@ -152,7 +152,7 @@
             <div class="decoration-grid__item-content">
               <h4 class="decoration-grid__content-title">Минимизация рисков</h4>
               <p class="decoration-grid__content-text">
-                Мы аккредитованы ГИТ и соблюдаем ТК РФ. Юридическая и административная ответственность на нас
+                Мы аккредитованы в Роструд и соблюдаем ТК РФ. Юридическая и административная ответственность на нас
               </p>
             </div>
           </div>
@@ -185,6 +185,8 @@
         </div>
       </section>
 
+      <!-- КАЛЬКУЛЯТОР (ВРЕМЕННО СКРЫТ) -->
+      <!-- 
       <section class="section">
         <div class="row section-title">
           <div class="col-md-7 section-title__main">
@@ -333,6 +335,8 @@
           </div>
         </div>
       </section>
+      -->
+      <!-- КОНЕЦ КАЛЬКУЛЯТОРА -->
 
       <section class="section">
         <div class="row section-title">
@@ -352,7 +356,7 @@
           </div>
         </div>
         <div
-          class="row wide-pic-with-subscription wide-pic-with-subscription_wide wide-pic-with-subscription_double-contrast"
+          class="row wide-pic-with-subscription wide-pic-with-subscription_wide wide-pic-with-subscription_double-contrast image-fade-in"
           :style="teamImageStyle"
         >
           <div
@@ -391,7 +395,7 @@
         </div>
         <div class="row">
           <div class="col">
-            <div class="image-slide-grid">
+            <div class="image-slide-grid image-fade-in">
               <div class="image-slide-grid__item" v-for="company in companies" :key="company">
                 <img
                   class="image-slide-grid__pic"
@@ -415,7 +419,12 @@
           </div>
         </div>
         <div class="services-table">
-          <div class="row services-table__row" v-for="service in services" :key="service.title">
+          <div 
+            class="row services-table__row service-item" 
+            v-for="(service, index) in services" 
+            :key="service.title"
+            :class="{ 'service-visible': servicesVisible[index] }"
+          >
             <div class="col-md-5 services-table__title">
               <div class="services-table__title-header" v-html="service.titleHtml || service.title">
               </div>
@@ -454,8 +463,14 @@
             </div>
           </div>
         </div>
-        <div class="row row-cols-1 row-cols-md-5">
-          <div class="col" v-for="step in steps" :key="step.number">
+        <div class="row row-cols-1 row-cols-md-5 steps-wrapper">
+          <div 
+            class="col step-item" 
+            v-for="(step, index) in steps" 
+            :key="step.number"
+            :class="{ 'step-visible': stepsVisible[index] }"
+            :style="{ transitionDelay: `${index * 200}ms` }"
+          >
             <div class="counter-item">
               <div class="counter-item__counter">{{ step.number }}</div>
               <p class="counter-item__title">{{ step.title }}</p>
@@ -479,7 +494,7 @@
         </div>
         <div class="row">
           <div class="col">
-            <div class="map-block">
+            <div class="map-block image-fade-in">
               <img
                 class="map-block__map d-none d-md-block"
                 :src="imageUrl('map.svg')"
@@ -521,10 +536,10 @@
             </div>
           </div>
         </div>
-        <div class="row row-cols-1 row-cols-md-4 counter-wrapper">
-          <div class="col counter-item" v-for="stat in statistics" :key="stat.title">
+        <div class="row row-cols-1 row-cols-md-4 counter-wrapper image-fade-in">
+          <div class="col counter-item" v-for="(stat, index) in statistics" :key="stat.title">
             <div class="counter-item__counter counter-item__counter_big">
-              <span class="counter-item__counter-gradient" data-counter="+">{{ stat.value }}</span>
+              <span class="counter-item__counter-gradient" data-counter="+">{{ formatNumber(animatedStats[index]) }}</span>
             </div>
             <p class="counter-item__title">{{ stat.title }}</p>
             <p class="counter-item__text">
@@ -548,14 +563,11 @@
               стоимости и юридических основах
             </p>
             <div class="social-links social-links_indent mt-3 mt-md-5">
-              <a href="" class="social-links__link">
+              <a href="https://api.whatsapp.com/send/?phone=79994447980&text=Добрый+день%2C+пишу+вам+с+сайта.&type=phone_number&app_absent=0" target="_blank" class="social-links__link">
                 <img :src="imageUrl('social/whatsapp.svg')" alt="" />
               </a>
-              <a href="" class="social-links__link">
+              <a href="https://t.me/reazaresurs?text=Добрый%20день,%20пишу%20вам%20с%20сайта%20☀%EF%B8%8F" target="_blank" class="social-links__link">
                 <img :src="imageUrl('social/telegram.svg')" alt="" />
-              </a>
-              <a href="" class="social-links__link">
-                <img :src="imageUrl('social/message.svg')" alt="" />
               </a>
             </div>
           </div>
@@ -633,6 +645,7 @@
 
     <section
       class="section section_red section_red-decoration section_overlay inverse-colors application-form-section"
+      :style="applicationFormStyle"
     >
       <div class="container">
         <div class="row section-title section-title_less">
@@ -667,6 +680,8 @@
                       type="text"
                       placeholder="Как вас зовут?"
                       v-model="applicationForm.name"
+                      @input="capitalizeFirstLetter('name')"
+                      maxlength="30"
                       required
                     />
                   </div>
@@ -677,9 +692,11 @@
                   >
                     <input
                       class="native-input__input native-input__input-text"
-                      type="text"
+                      type="tel"
                       placeholder="Ваш номер телефона"
                       v-model="applicationForm.phone"
+                      @focus="onPhoneFocus"
+                      @input="formatPhone"
                       required
                     />
                   </div>
@@ -691,6 +708,8 @@
                       type="text"
                       placeholder="Должность / специальность "
                       v-model="applicationForm.position"
+                      @input="capitalizeFirstLetter('position')"
+                      maxlength="30"
                     />
                   </div>
                 </div>
@@ -706,8 +725,7 @@
                       v-model="applicationForm.agree"
                       required
                     />
-                    Отправляя форму, вы соглашаетесь с [Политикой
-                    конфиденциальности] и обработкой персональных данных.
+                    Отправляя форму, вы соглашаетесь с Политикой конфиденциальности и обработкой персональных данных.
                   </label>
                 </div>
               </div>
@@ -840,7 +858,7 @@ export default {
         {
           question: 'Кто платит налоги и взносы?',
           icon: 'faq2',
-          isOpen: true,
+          isOpen: false,
           answer: '<p>Все налоги и страховые взносы платит ООО "РЕЗАРЕСУРС" — как работодатель, на которого оформлены сотрудники.</p><span>Это включает:</span><ul><li>НДФЛ (13%),</li><li>Страховые взносы в ПФР, ФСС, ФОМС (до 30% от ФОТ),</li><li>Отпускные, больничные, пособия,</li><li>Компенсации при увольнении</li></ul><p>Вы платите единую фиксированную сумму за услуги аутстаффинга — без дополнительных обязательных платежей. Это позволяет снизить налоговую нагрузку и избежать административной нагрузки.</p>'
         },
         {
@@ -872,9 +890,15 @@ export default {
         name: '',
         phone: '',
         position: '',
-        agree: false
+        agree: true
       },
-      applicationSubmitted: false
+      applicationSubmitted: false,
+      animatedStats: [0, 0, 0, 0],
+      statsAnimated: false,
+      stepsVisible: [false, false, false, false, false],
+      stepsAnimated: false,
+      servicesVisible: [],
+      servicesAnimated: false
     }
   },
   computed: {
@@ -886,6 +910,14 @@ export default {
     teamImageStyle() {
       return {
         backgroundImage: `url(${this.imageUrl('team-pic.png')})`
+      };
+    },
+    applicationFormStyle() {
+      return {
+        backgroundImage: `url(${this.imageUrl('Main.png')})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat'
       };
     }
   },
@@ -923,7 +955,17 @@ export default {
       // Open Graph теги
       this.updateMetaTag('og:title', seo.seo_social_title || seo.title);
       this.updateMetaTag('og:description', seo.seo_social_description || seo.seo_description);
-      // Twitter Card теги удалены по требованию
+      
+      // Добавляем обложку страницы если она есть
+      if (seo.cover_image_url) {
+        this.updateMetaTag('og:image', seo.cover_image_url);
+        this.updateMetaTag('twitter:image', seo.cover_image_url);
+        this.updateMetaTag('twitter:card', 'summary_large_image');
+      } else {
+        // Удаляем мета-теги изображения если обложки нет
+        this.updateMetaTag('og:image', null);
+        this.updateMetaTag('twitter:image', null);
+      }
     },
     updateMetaTag(name, content) {
       // Определяем селектор по типу тега
@@ -981,12 +1023,54 @@ export default {
           name: '',
           phone: '',
           position: '',
-          agree: false
+          agree: true
         };
       } catch (error) {
         console.error('Ошибка отправки заявки:', error);
         // Можно вывести ненавязчивое сообщение об ошибке
       }
+    },
+    capitalizeFirstLetter(field) {
+      // Делаем первую букву заглавной
+      const value = this.applicationForm[field];
+      if (value && value.length > 0) {
+        this.applicationForm[field] = value.charAt(0).toUpperCase() + value.slice(1);
+      }
+    },
+    onPhoneFocus() {
+      // При клике на поле, если оно пустое, ставим +7
+      if (!this.applicationForm.phone || this.applicationForm.phone === '') {
+        this.applicationForm.phone = '+7 ';
+      }
+    },
+    formatPhone() {
+      // Форматируем номер телефона в формате +7 (999) 444-44-44
+      let value = this.applicationForm.phone.replace(/\D/g, ''); // Убираем все нецифровые символы
+      
+      // Всегда начинаем с 7
+      if (!value.startsWith('7')) {
+        value = '7' + value.replace(/^7*/, '');
+      }
+      
+      // Ограничиваем длину (7 + 10 цифр)
+      value = value.substring(0, 11);
+      
+      // Форматируем
+      let formatted = '+7';
+      if (value.length > 1) {
+        formatted += ' (' + value.substring(1, 4);
+      }
+      if (value.length >= 5) {
+        formatted += ') ' + value.substring(4, 7);
+      }
+      if (value.length >= 8) {
+        formatted += '-' + value.substring(7, 9);
+      }
+      if (value.length >= 10) {
+        formatted += '-' + value.substring(9, 11);
+      }
+      
+      this.applicationForm.phone = formatted;
     },
     toggleFaq(faq) {
       faq.isOpen = !faq.isOpen;
@@ -1042,6 +1126,119 @@ export default {
       });
       
       observer.observe(formSection);
+    },
+    animateCounter(index, targetValue) {
+      const duration = 2000; // 2 секунды
+      const steps = 60; // количество шагов
+      const stepDuration = duration / steps;
+      const increment = targetValue / steps;
+      let currentValue = 0;
+      
+      const timer = setInterval(() => {
+        currentValue += increment;
+        if (currentValue >= targetValue) {
+          this.animatedStats[index] = targetValue;
+          clearInterval(timer);
+        } else {
+          this.animatedStats[index] = Math.floor(currentValue);
+        }
+      }, stepDuration);
+    },
+    formatNumber(num) {
+      // Форматируем число с пробелами (8000 → 8 000)
+      return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+    },
+    initStatsAnimation() {
+      const statsWrapper = this.$el.querySelector('.counter-wrapper');
+      if (!statsWrapper || this.statsAnimated) return;
+      
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting && !this.statsAnimated) {
+            this.statsAnimated = true;
+            // Запускаем анимацию для каждой цифры
+            this.statistics.forEach((stat, index) => {
+              setTimeout(() => {
+                this.animateCounter(index, parseInt(stat.value));
+              }, index * 100); // Задержка между запуском анимаций
+            });
+            observer.unobserve(entry.target);
+          }
+        });
+      }, {
+        threshold: 0.3
+      });
+      
+      observer.observe(statsWrapper);
+    },
+    initStepsAnimation() {
+      const stepsWrapper = this.$el.querySelector('.steps-wrapper');
+      if (!stepsWrapper || this.stepsAnimated) return;
+      
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting && !this.stepsAnimated) {
+            this.stepsAnimated = true;
+            // Последовательно показываем шаги
+            this.steps.forEach((step, index) => {
+              setTimeout(() => {
+                this.stepsVisible[index] = true;
+              }, index * 200); // Задержка 200мс между шагами
+            });
+            observer.unobserve(entry.target);
+          }
+        });
+      }, {
+        threshold: 0.2
+      });
+      
+      observer.observe(stepsWrapper);
+    },
+    initServicesAnimation() {
+      const servicesTable = this.$el.querySelector('.services-table');
+      if (!servicesTable || this.servicesAnimated) return;
+      
+      // Инициализируем массив видимости услуг
+      this.servicesVisible = new Array(this.services.length).fill(false);
+      
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting && !this.servicesAnimated) {
+            this.servicesAnimated = true;
+            // Последовательно показываем услуги
+            this.services.forEach((service, index) => {
+              setTimeout(() => {
+                this.servicesVisible[index] = true;
+              }, index * 300); // Задержка 300мс между услугами
+            });
+            observer.unobserve(entry.target);
+          }
+        });
+      }, {
+        threshold: 0.1
+      });
+      
+      observer.observe(servicesTable);
+    },
+    initImagesAnimation() {
+      const images = this.$el.querySelectorAll('.image-fade-in');
+      if (!images.length) return;
+      
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            setTimeout(() => {
+              entry.target.classList.add('visible');
+            }, 50);
+            observer.unobserve(entry.target);
+          }
+        });
+      }, {
+        threshold: 0.1,
+        rootMargin: '50px'
+      });
+      
+      images.forEach(image => observer.observe(image));
     }
   },
   mounted() {
@@ -1050,6 +1247,10 @@ export default {
     // Плавное появление формы заявки при прокрутке
     this.$nextTick(() => {
       this.initFormVisibility();
+      this.initStatsAnimation();
+      this.initStepsAnimation();
+      this.initServicesAnimation();
+      this.initImagesAnimation();
     });
   }
 }
@@ -1098,6 +1299,12 @@ html {
   background: transparent;
 }
 
+/* Затемнение стрелки при наведении на вопрос */
+.native-accardeon__summary:hover .native-accardeon__summary-toggle {
+  opacity: 0.5;
+  filter: brightness(0.7);
+}
+
 .native-accardeon__summary-icon {
   width: clamp(26px, 2.5198930481cqw, 46px);
   height: clamp(26px, 2.5198930481cqw, 46px);
@@ -1130,7 +1337,9 @@ html {
   background-size: clamp(10px, 1.0225668449cqw, 18px);
   background-repeat: no-repeat;
   background-position: center;
-  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), 
+              opacity 0.3s ease,
+              filter 0.3s ease;
   flex-shrink: 0;
 }
 
@@ -1235,6 +1444,100 @@ body {
   opacity: 1;
   transform: translateY(0);
 }
+
+/* Принудительно отключаем старый фон SVG для формы заявки */
+.application-form-section.section_red-decoration {
+  background-image: none !important;
+}
+
+/* Включаем overlay градиент для плавного затемнения к футеру */
+.application-form-section.section_overlay::before {
+  content: "" !important;
+  display: block !important;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(180deg, transparent 0%, transparent 50%, rgba(20, 20, 21, 0.7) 85%, var(--block-color-2) 100%) !important;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.application-form-section .container {
+  position: relative;
+  z-index: 2;
+  padding-left: calc(var(--bs-gutter-x) * 0.5) !important;
+  padding-right: calc(var(--bs-gutter-x) * 0.5) !important;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Выравниваем row внутри формы заявки с общим контейнером страницы */
+.application-form-section .row {
+  margin-left: calc(-0.5 * var(--bs-gutter-x));
+  margin-right: calc(-0.5 * var(--bs-gutter-x));
+}
+
+/* Убираем белую полосу между формой и футером на мобильных */
+@media (width < 768px) {
+  section.application-form-section,
+  .application-form-section.section,
+  .application-form-section {
+    margin: 0 !important;
+    margin-bottom: 0 !important;
+    margin-top: 0 !important;
+    padding-bottom: clamp(60px, 6.7979679144cqw, 126px) !important;
+  }
+  
+  .home-page {
+    margin: 0 !important;
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+  }
+  
+  .home-page > *:last-child {
+    margin-bottom: 0 !important;
+  }
+}
+
+/* Анимация появления шагов */
+.step-item {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.step-item.step-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Анимация появления услуг */
+.service-item {
+  opacity: 0;
+  transform: translateX(-30px);
+  transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+}
+
+.service-item.service-visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Анимация появления картинок */
+.image-fade-in {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  will-change: opacity, transform;
+}
+
+.image-fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 </style>
 
 <style scoped>

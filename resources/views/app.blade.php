@@ -5,6 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ config('app.name', 'Laravel') }}</title>
+    
+    @php
+        $favicon = \App\Models\Setting::getValue('favicon');
+        $yandexMetrica = \App\Models\Setting::getValue('yandex_metrica_code');
+    @endphp
+    
+    <!-- Favicon -->
+    @if($favicon)
+        <link rel="icon" type="image/x-icon" href="{{ asset('storage/' . $favicon) }}">
+    @endif
+    
     <!-- Базовые meta теги для SEO (будут обновляться динамически через Vue) -->
     <meta name="description" content="">
     <meta name="keywords" content="">
@@ -12,14 +23,22 @@
     <meta property="og:title" content="">
     <meta property="og:description" content="">
     <meta property="og:type" content="website">
+    <meta property="og:image" content="">
     <!-- Twitter Card теги -->
     <meta name="twitter:title" content="">
     <meta name="twitter:description" content="">
+    <meta name="twitter:image" content="">
+    <meta name="twitter:card" content="summary_large_image">
     <!-- Шаблон стили -->
     <link rel="stylesheet" href="{{ asset('rez/css/bootstrap/bootstrap.css') }}" />
     <link rel="stylesheet" href="{{ asset('rez/css/fonts.css') }}" />
     <link rel="stylesheet" href="{{ asset('rez/css/style.css') }}" />
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    
+    <!-- Яндекс Метрика -->
+    @if($yandexMetrica)
+        {!! $yandexMetrica !!}
+    @endif
 </head>
 <body>
     <div id="app"></div>

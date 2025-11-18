@@ -63,7 +63,7 @@
                   </a>
                 </div>
                 <div class="page-nav__menu-actions mt-4">
-                  <a href="" class="native-button"> Оставить заявку </a>
+                  <a href="https://t.me/reazaresurs?text=Добрый%20день,%20пишу%20вам%20с%20сайта%20☀%EF%B8%8F" target="_blank" class="native-button"> Оставить заявку </a>
                 </div>
               </div>
             </div>
@@ -76,7 +76,8 @@
               </a>
               <a
                 class="page-nav__side-element page-nav__side-element-action"
-                href=""
+                href="https://t.me/reazaresurs?text=Добрый%20день,%20пишу%20вам%20с%20сайта%20☀%EF%B8%8F"
+                target="_blank"
               >
                 Оставить заявку
               </a>
@@ -195,6 +196,28 @@ export default {
       this.menuOpen = false;
     }
   },
+  mounted() {
+    // Запрет контекстного меню (правый клик)
+    document.addEventListener('contextmenu', this.preventContextMenu);
+    
+    // Запрет выделения и копирования
+    document.addEventListener('copy', this.preventCopy);
+    document.addEventListener('cut', this.preventCut);
+    
+    // Запрет перетаскивания изображений
+    document.addEventListener('dragstart', this.preventDrag);
+    
+    // Запрет сохранения изображений через клавиатуру
+    document.addEventListener('keydown', this.preventKeyboardShortcuts);
+  },
+  beforeUnmount() {
+    // Удаляем обработчики при размонтировании компонента
+    document.removeEventListener('contextmenu', this.preventContextMenu);
+    document.removeEventListener('copy', this.preventCopy);
+    document.removeEventListener('cut', this.preventCut);
+    document.removeEventListener('dragstart', this.preventDrag);
+    document.removeEventListener('keydown', this.preventKeyboardShortcuts);
+  },
   methods: {
     imageUrl(path) {
       // Helper для путей к изображениям из public
@@ -202,10 +225,77 @@ export default {
     },
     closeMenu() {
       this.menuOpen = false;
+    },
+    preventContextMenu(e) {
+      e.preventDefault();
+      return false;
+    },
+    preventCopy(e) {
+      e.preventDefault();
+      return false;
+    },
+    preventCut(e) {
+      e.preventDefault();
+      return false;
+    },
+    preventDrag(e) {
+      e.preventDefault();
+      return false;
+    },
+    preventKeyboardShortcuts(e) {
+      // Запрет Ctrl+C, Ctrl+X, Ctrl+U (просмотр кода), Ctrl+S (сохранение)
+      if (e.ctrlKey && (e.key === 'c' || e.key === 'x' || e.key === 'u' || e.key === 's')) {
+        e.preventDefault();
+        return false;
+      }
+      // Запрет F12 (DevTools)
+      if (e.key === 'F12') {
+        e.preventDefault();
+        return false;
+      }
     }
   }
 }
 </script>
+
+<style>
+/* Глобальные стили защиты контента */
+* {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+}
+
+/* Запрет перетаскивания изображений */
+img {
+  -webkit-user-drag: none;
+  -khtml-user-drag: none;
+  -moz-user-drag: none;
+  -o-user-drag: none;
+  user-drag: none;
+}
+
+/* Разрешаем выделение для инпутов и текстовых полей */
+input,
+textarea,
+[contenteditable="true"] {
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
+}
+
+/* Стили для изображений чтобы их нельзя было выделить */
+img::selection {
+  background: transparent;
+}
+
+img::-moz-selection {
+  background: transparent;
+}
+</style>
 
 <style scoped>
 .app-container {

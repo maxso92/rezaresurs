@@ -2,8 +2,7 @@
   display: inline-block;
   background-image: linear-gradient(90deg, #ff2200, #ff6600);
   color: transparent;
-  -webkit-background-clip: text;
-          background-clip: text;
+  background-clip: text;
   padding-right: 0.1em;
   line-height: 1.3;
 }
@@ -206,9 +205,7 @@ h1 {
   cursor: pointer;
   margin-bottom: clamp(12px, 0.9156149733cqw, 16px);
   font-size: var(--text-size-7-alt);
-  -webkit-user-select: none;
-     -moz-user-select: none;
-          user-select: none;
+  user-select: none;
   color: var(--main-text-color);
 }
 .native-input__input-text {
@@ -221,9 +218,6 @@ h1 {
   background: var(--input-background-color);
   color: var(--main-text-color);
   outline: 0;
-}
-.native-input__input-text::-moz-placeholder {
-  color: var(--input-placeholder-color);
 }
 .native-input__input-text::placeholder {
   color: var(--input-placeholder-color);
@@ -365,6 +359,69 @@ h1 {
 .section_overlay > * {
   z-index: 100;
   position: relative;
+}
+
+/* Специальные стили для формы заявки - перебиваем все остальные фоны */
+section.application-form-section.section_red.section_red-decoration,
+.application-form-section.section_red-decoration {
+  background-image: url(/images/Main.png) !important;
+  background-size: cover !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+}
+
+/* Настраиваем overlay градиент для плавного затемнения к футеру */
+section.application-form-section.section_overlay:before,
+.application-form-section.section_overlay:before {
+  background: linear-gradient(180deg, transparent 0%, transparent 50%, rgba(20, 20, 21, 0.7) 85%, var(--block-color-2) 100%) !important;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.application-form-section .container {
+  position: relative;
+  z-index: 2;
+  padding-left: calc(var(--bs-gutter-x) * 0.5) !important;
+  padding-right: calc(var(--bs-gutter-x) * 0.5) !important;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Выравниваем row внутри формы заявки с общим контейнером страницы */
+.application-form-section .row {
+  margin-left: calc(-0.5 * var(--bs-gutter-x));
+  margin-right: calc(-0.5 * var(--bs-gutter-x));
+}
+
+@media (width < 768px) {
+  section.application-form-section.section_red-decoration,
+  .application-form-section.section_red-decoration {
+    background-position: center !important;
+  }
+  
+  /* Убираем белую полосу между формой и футером на мобильных */
+  section.application-form-section,
+  .application-form-section.section,
+  .application-form-section {
+    margin: 0 !important;
+    margin-bottom: 0 !important;
+    margin-top: 0 !important;
+    padding-bottom: clamp(60px, 6.7979679144cqw, 126px) !important;
+  }
+  
+  .home-page {
+    margin: 0 !important;
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+  }
+  
+  .home-page > *:last-child {
+    margin-bottom: 0 !important;
+  }
+  
+  body {
+    margin-bottom: 0 !important;
+  }
 }
 
 body .inverse-colors {
@@ -519,9 +576,7 @@ a {
   }
 }
 .page-nav__menu-toggle {
-  -webkit-user-select: none;
-     -moz-user-select: none;
-          user-select: none;
+  user-select: none;
 }
 .page-nav__menu-toggle img {
   height: clamp(10px, 1.3434224599cqw, 24px);
@@ -579,6 +634,7 @@ a {
 }
 .page-footer__header {
   font-size: var(--text-heading-size-5);
+  color: #E0E0E0;
   margin-bottom: clamp(14px, 1.1295187166cqw, 20px);
 }
 .page-footer__logo {
@@ -599,7 +655,7 @@ a {
 }
 .page-footer a {
   display: block;
-  color: var(--main-text-color);
+  color: #E0E0E0;
   text-decoration: none;
   margin-bottom: clamp(10px, 0.6482352941cqw, 11px);
 }
@@ -815,7 +871,6 @@ a {
   font-size: var(--text-size-1);
   padding-top: 18px;
   margin-bottom: clamp(35px, 2.1990374332cqw, 40px);
-  min-width: -moz-max-content;
   min-width: max-content;
 }
 .services-table__title-label {
@@ -823,7 +878,6 @@ a {
   font-size: var(--text-size-7);
   display: inline;
   height: 28px;
-  height: -moz-min-content;
   height: min-content;
   border-radius: 5px;
   color: var(--contrast-text-color);
@@ -845,11 +899,12 @@ a {
 .counter-wrapper > .counter-item {
   padding-left: 25px;
 }
-@media (width >= 768px) {
+/* Убираем вертикальные разделители между элементами статистики */
+/* @media (width >= 768px) {
   .counter-wrapper > .counter-item:not(:first-child) {
     border-left: solid 1px var(--main-border-color);
   }
-}
+} */
 @media (width < 768px) {
   .counter-wrapper > .counter-item {
     border-top: solid 1px var(--main-border-color);
@@ -880,8 +935,7 @@ a {
   display: inline-block;
   background-image: linear-gradient(90deg, #ff2200, #ff6600);
   color: transparent;
-  -webkit-background-clip: text;
-          background-clip: text;
+  background-clip: text;
   padding-right: 0.1em;
   line-height: 1.3;
 }
@@ -965,4 +1019,6 @@ a {
   color: var(--second-text-color);
   padding: clamp(14px, 1.7177540107cqw, 31px) clamp(9px, 1.0225668449cqw, 18px);
   padding-top: 0;
-}/*# sourceMappingURL=style.css.map */
+}
+
+/*# sourceMappingURL=style.css.map */

@@ -30,7 +30,7 @@ class PageController extends Controller
     {
         $page = Page::where('alias', $alias)
             ->where('is_published', true)
-            ->select('title', 'seo_keyword', 'seo_description', 'seo_social_title', 'seo_social_description')
+            ->select('title', 'seo_keyword', 'seo_description', 'seo_social_title', 'seo_social_description', 'cover_image')
             ->first();
             
         if (!$page) {
@@ -39,8 +39,16 @@ class PageController extends Controller
                 'seo_keyword' => null,
                 'seo_description' => null,
                 'seo_social_title' => null,
-                'seo_social_description' => null
+                'seo_social_description' => null,
+                'cover_image' => null
             ]);
+        }
+        
+        // Добавляем полный URL к изображению обложки
+        if ($page->cover_image) {
+            $page->cover_image_url = asset('storage/' . $page->cover_image);
+        } else {
+            $page->cover_image_url = null;
         }
             
         return response()->json($page);

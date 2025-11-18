@@ -86,6 +86,15 @@
                                         <span class="sidebar-text">Пользователи</span>
                                     </a>
                                 </li>
+
+                                <li class="nav-item">
+                                    <a href="{{ route('admin.settings.index') }}" class="nav-link d-flex align-items-center text-truncate @if(request()->routeIs('admin.settings.*')) active @endif">
+                                        <span class="sidebar-icon">
+                                            <span class="material-symbols-rounded">settings</span>
+                                        </span>
+                                        <span class="sidebar-text">Настройки</span>
+                                    </a>
+                                </li>
                             </ul>
                         </nav>
                     </div>

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Page;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 
 class PageController extends Controller
 {
@@ -31,8 +32,18 @@ class PageController extends Controller
             'seo_social_title' => 'nullable|string',
             'seo_social_description' => 'nullable|string',
             'content' => 'nullable|string',
+            'cover_image' => 'nullable|image|mimes:jpeg,jpg,png,webp|max:5120',
+            'redirect_url' => 'nullable|url',
             'is_published' => 'boolean',
         ]);
+
+        // Обработка загрузки обложки
+        if ($request->hasFile('cover_image')) {
+            $file = $request->file('cover_image');
+            $filename = time() . '_' . Str::slug($request->name) . '.' . $file->getClientOriginalExtension();
+            $path = $file->storeAs('pages', $filename, 'public');
+            $validated['cover_image'] = $path;
+        }
 
         Page::create($validated);
 
@@ -64,8 +75,23 @@ class PageController extends Controller
             'seo_social_title' => 'nullable|string',
             'seo_social_description' => 'nullable|string',
             'content' => 'nullable|string',
+            'cover_image' => 'nullable|image|mimes:jpeg,jpg,png,webp|max:5120',
+            'redirect_url' => 'nullable|url',
             'is_published' => 'boolean',
         ]);
+
+        // Обработка загрузки обложки
+        if ($request->hasFile('cover_image')) {
+            // Удаляем старую обложку если есть
+            if ($page->cover_image && Storage::disk('public')->exists($page->cover_image)) {
+                Storage::disk('public')->delete($page->cover_image);
+            }
+            
+            $file = $request->file('cover_image');
+            $filename = time() . '_' . Str::slug($request->name) . '.' . $file->getClientOriginalExtension();
+            $path = $file->storeAs('pages', $filename, 'public');
+            $validated['cover_image'] = $path;
+        }
 
         $page->update($validated);
 
@@ -75,8 +101,28 @@ class PageController extends Controller
     public function destroy(string $id)
     {
         $page = Page::findOrFail($id);
+        
+        // Удаляем обложку если есть
+        if ($page->cover_image && Storage::disk('public')->exists($page->cover_image)) {
+            Storage::disk('public')->delete($page->cover_image);
+        }
+        
         $page->delete();
 
         return redirect()->route('admin.pages.index')->with('success', 'Страница успешно удалена');
+    }
+
+    public function deleteCoverImage(string $id)
+    {
+        $page = Page::findOrFail($id);
+        
+        if ($page->cover_image && Storage::disk('public')->exists($page->cover_image)) {
+            Storage::disk('public')->delete($page->cover_image);
+        }
+        
+        $page->cover_image = null;
+        $page->save();
+
+        return redirect()->back()->with('success', 'Обложка успешно удалена');
     }
 }

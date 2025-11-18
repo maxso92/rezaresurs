@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\PageController as AdminPageController;
+use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Api\PageController as ApiPageController;
 use App\Http\Controllers\Api\ContactController;
 
@@ -52,6 +53,12 @@ Route::prefix('admin')->group(function () {
             'update' => 'admin.pages.update',
             'destroy' => 'admin.pages.destroy',
         ]);
+        Route::delete('/pages/{id}/cover', [AdminPageController::class, 'deleteCoverImage'])->name('admin.pages.delete-cover');
+        
+        // Настройки сайта
+        Route::get('/settings', [SettingController::class, 'index'])->name('admin.settings.index');
+        Route::post('/settings', [SettingController::class, 'update'])->name('admin.settings.update');
+        Route::delete('/settings/favicon', [SettingController::class, 'deleteFavicon'])->name('admin.settings.delete-favicon');
     });
 });
 
