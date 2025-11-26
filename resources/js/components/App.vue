@@ -112,9 +112,9 @@
             />
 
             <h4 class="page-footer__header">Контакты</h4>
-            <p><img :src="imageUrl('phone.svg')" alt="" /> +7 (924) 600-36-49</p>
+            <p><img :src="imageUrl('phone.svg')" alt="" /> <a href="tel:+79994447980" class="inline-link">+7 (999) 444-79-80</a></p>
             <p>
-              <img :src="imageUrl('conver-white.svg')" alt="" /> hello@rezaresurs.ru
+              <img :src="imageUrl('conver-white.svg')" alt="" /> <a href="mailto:sales@rezaresurs.ru" class="inline-link">sales@rezaresurs.ru</a>
             </p>
             <p>
               <img :src="imageUrl('pin.svg')" alt="" /> Адрес офиса: 664047, Иркутск,
@@ -294,6 +294,18 @@ img::selection {
 
 img::-moz-selection {
   background: transparent;
+}
+
+/* Inline ссылки в футере (для контактов) */
+.page-footer .inline-link {
+  display: inline !important;
+  margin-bottom: 0 !important;
+  color: inherit;
+  text-decoration: none;
+}
+
+.page-footer .inline-link:hover {
+  text-decoration: underline;
 }
 </style>
 

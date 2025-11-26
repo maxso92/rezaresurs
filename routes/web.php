@@ -4,9 +4,11 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\PageController as AdminPageController;
+use App\Http\Controllers\Admin\ApplicationController as AdminApplicationController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Api\PageController as ApiPageController;
 use App\Http\Controllers\Api\ContactController;
+use App\Http\Controllers\Api\ApplicationController as ApiApplicationController;
 
 // Тестовая страница иконок
 Route::get('/test-icons', function () {
@@ -24,6 +26,7 @@ Route::prefix('api')->group(function () {
     Route::get('/pages/{alias}', [ApiPageController::class, 'show']);
     Route::get('/pages/{alias}/seo', [ApiPageController::class, 'seo']);
     Route::post('/contact', [ContactController::class, 'submit']);
+    Route::post('/applications', [ApiApplicationController::class, 'store']);
 });
 
 // Админ панель - авторизация
@@ -54,6 +57,15 @@ Route::prefix('admin')->group(function () {
             'destroy' => 'admin.pages.destroy',
         ]);
         Route::delete('/pages/{id}/cover', [AdminPageController::class, 'deleteCoverImage'])->name('admin.pages.delete-cover');
+        
+        // Заявки
+        Route::resource('applications', AdminApplicationController::class)->only(['index', 'edit', 'update', 'destroy'])->names([
+            'index' => 'admin.applications.index',
+            'edit' => 'admin.applications.edit',
+            'update' => 'admin.applications.update',
+            'destroy' => 'admin.applications.destroy',
+        ]);
+        Route::post('/applications/{id}/toggle-viewed', [AdminApplicationController::class, 'toggleViewed'])->name('admin.applications.toggle-viewed');
         
         // Настройки сайта
         Route::get('/settings', [SettingController::class, 'index'])->name('admin.settings.index');

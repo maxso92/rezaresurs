@@ -109,7 +109,7 @@
                     </div>
 
                     <!-- Яндекс Метрика -->
-                    <div class="mb-3">
+                    <div class="mb-4">
                         <label for="yandex_metrica_code" class="form-label">
                             <span class="material-symbols-rounded align-middle me-1" style="font-size: 18px;">code</span>
                             Яндекс Метрика (HTML код)
@@ -122,6 +122,45 @@
                                   style="font-family: monospace; font-size: 12px;">{{ old('yandex_metrica_code', $settings['yandex_metrica_code'] ?? '') }}</textarea>
                         <div class="form-text">Вставьте полный HTML код счетчика Яндекс Метрики</div>
                         @error('yandex_metrica_code')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    
+                    <hr class="my-4">
+                    
+                    <!-- Телеграм заявки -->
+                    <h6 class="mb-3">
+                        Телеграм заявки
+                    </h6>
+                    
+                    <div class="mb-3">
+                        <label for="telegram_callback_token" class="form-label">
+                            Telegram Callback Token
+                        </label>
+                        <input type="text" 
+                               class="form-control @error('telegram_callback_token') is-invalid @enderror" 
+                               id="telegram_callback_token" 
+                               name="telegram_callback_token" 
+                               value="{{ old('telegram_callback_token', $settings['telegram_callback_token'] ?? '') }}"
+                               placeholder="Введите токен для callback Telegram">
+                        <div class="form-text">Токен для отправки уведомлений о новых заявках в Telegram</div>
+                        @error('telegram_callback_token')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="telegram_callback_id" class="form-label">
+                            Telegram Callback Id
+                        </label>
+                        <input type="text" 
+                               class="form-control @error('telegram_callback_id') is-invalid @enderror" 
+                               id="telegram_callback_id" 
+                               name="telegram_callback_id" 
+                               value="{{ old('telegram_callback_id', $settings['telegram_callback_id'] ?? '') }}"
+                               placeholder="Введите ID чата или канала">
+                        <div class="form-text">ID чата или канала, куда будут отправляться уведомления</div>
+                        @error('telegram_callback_id')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>

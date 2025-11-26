@@ -1013,11 +1013,16 @@ export default {
       }
     },
     async submitApplication() {
-      // Отправка формы заявки (можно подключить к API)
+      // Отправка формы заявки
       try {
-        console.log('Отправка заявки:', this.applicationForm);
-        // Здесь можно добавить отправку на сервер через axios
+        const response = await axios.post('/api/applications', {
+          name: this.applicationForm.name,
+          phone: this.applicationForm.phone,
+          position: this.applicationForm.position || null
+        });
+        
         this.applicationSubmitted = true;
+        
         // Сброс формы
         this.applicationForm = {
           name: '',
@@ -1027,7 +1032,7 @@ export default {
         };
       } catch (error) {
         console.error('Ошибка отправки заявки:', error);
-        // Можно вывести ненавязчивое сообщение об ошибке
+        alert('Произошла ошибка при отправке заявки. Попробуйте позже.');
       }
     },
     capitalizeFirstLetter(field) {
@@ -1073,7 +1078,17 @@ export default {
       this.applicationForm.phone = formatted;
     },
     toggleFaq(faq) {
-      faq.isOpen = !faq.isOpen;
+      // Если вопрос уже открыт, закрываем его
+      if (faq.isOpen) {
+        faq.isOpen = false;
+      } else {
+        // Закрываем все остальные вопросы
+        this.faqs.forEach(item => {
+          item.isOpen = false;
+        });
+        // Открываем выбранный вопрос
+        faq.isOpen = true;
+      }
     },
     onEnter(el) {
       // Устанавливаем начальную высоту

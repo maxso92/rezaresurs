@@ -1,0 +1,35 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        // Добавляем дефолтные значения для настроек Telegram, если их еще нет
+        DB::table('settings')->updateOrInsert(
+            ['key' => 'telegram_callback_token'],
+            ['value' => null, 'created_at' => now(), 'updated_at' => now()]
+        );
+        
+        DB::table('settings')->updateOrInsert(
+            ['key' => 'telegram_callback_id'],
+            ['value' => null, 'created_at' => now(), 'updated_at' => now()]
+        );
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        // Удаляем настройки Telegram
+        DB::table('settings')->whereIn('key', ['telegram_callback_token', 'telegram_callback_id'])->delete();
+    }
+};

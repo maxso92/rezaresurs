@@ -88,6 +88,20 @@
                                 </li>
 
                                 <li class="nav-item">
+                                    <a href="{{ route('admin.applications.index') }}" class="nav-link d-flex align-items-center text-truncate @if(request()->routeIs('admin.applications.*')) active @endif">
+                                        <span class="sidebar-icon">
+                                            <span class="material-symbols-rounded">inbox</span>
+                                        </span>
+                                        <span class="sidebar-text">Заявки</span>
+                                        @if($newApplicationsCount > 0)
+                                            <span class="badge bg-danger rounded-pill ms-auto" style="font-size: 11px; min-width: 20px; height: 20px; line-height: 20px; padding: 0 6px;">
+                                                {{ $newApplicationsCount }}
+                                            </span>
+                                        @endif
+                                    </a>
+                                </li>
+
+                                <li class="nav-item">
                                     <a href="{{ route('admin.settings.index') }}" class="nav-link d-flex align-items-center text-truncate @if(request()->routeIs('admin.settings.*')) active @endif">
                                         <span class="sidebar-icon">
                                             <span class="material-symbols-rounded">settings</span>

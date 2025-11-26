@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>РЕЗАРЕСУРС - Аутстаффинг разработчиков и IT-специалистов</title>
+    <link rel="stylesheet" href="css/bootstrap/bootstrap.css">
+    <link rel="stylesheet" href="css/fonts.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* Плавная прокрутка для всей страницы */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto;
+            }
+        }
+
+        body {
+            overflow-x: hidden;
+        }
+
+        .home-page {
+            min-height: 100vh;
+        }
+
+        /* Hero Section Styles - используем стили из index.html */
+        .hero-banner-section {
+            position: relative;
+        }
+
+        .hero-banner-section .wide-pic-with-subscription {
+            background-image: url(banner.png);
+        }
+
+        /* Стили для профилей на фоне */
+        .hero-profiles-container {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .profile-tag {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 50px;
+            padding: clamp(12px, 1.5vw, 18px) clamp(20px, 2.5vw, 30px);
+            display: flex;
+            align-items: center;
+            gap: clamp(10px, 1.5vw, 15px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            white-space: nowrap;
+            opacity: 1;
+            will-change: transform;
+        }
+
+        .profile-avatar {
+            width: clamp(32px, 4vw, 48px);
+            height: clamp(32px, 4vw, 48px);
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-weight: 600;
+            font-size: clamp(14px, 1.8vw, 20px);
+            flex-shrink: 0;
+        }
+
+        .profile-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .profile-title {
+            font-size: clamp(14px, 1.8vw, 18px);
+            font-weight: 700;
+            color: #000;
+            margin-bottom: 4px;
+        }
+
+        .profile-skills {
+            font-size: clamp(12px, 1.5vw, 14px);
+            color: #666;
+        }
+
+        @keyframes slideFromRight {
+            0% {
+                right: -400px;
+                opacity: 0;
+            }
+            5% {
+                opacity: 1;
+            }
+            95% {
+                opacity: 1;
+            }
+            100% {
+                right: calc(100% + 400px);
+                opacity: 0;
+            }
+        }
+
+        /* Profile positions - вертикальное распределение справа */
+        .profile-tag:nth-child(1) {
+            top: 8%;
+            animation: slideFromRight 25s linear infinite;
+            animation-delay: 0s;
+        }
+
+        .profile-tag:nth-child(2) {
+            top: 22%;
+            animation: slideFromRight 28s linear infinite;
+            animation-delay: 3s;
+        }
+
+        .profile-tag:nth-child(3) {
+            top: 36%;
+            animation: slideFromRight 30s linear infinite;
+            animation-delay: 6s;
+        }
+
+        .profile-tag:nth-child(4) {
+            top: 50%;
+            animation: slideFromRight 27s linear infinite;
+            animation-delay: 9s;
+        }
+
+        .profile-tag:nth-child(5) {
+            top: 64%;
+            animation: slideFromRight 26s linear infinite;
+            animation-delay: 12s;
+        }
+
+        .profile-tag:nth-child(6) {
+            top: 15%;
+            animation: slideFromRight 29s linear infinite;
+            animation-delay: 15s;
+        }
+
+        .profile-tag:nth-child(7) {
+            top: 29%;
+            animation: slideFromRight 24s linear infinite;
+            animation-delay: 18s;
+        }
+
+        .profile-tag:nth-child(8) {
+            top: 43%;
+            animation: slideFromRight 31s linear infinite;
+            animation-delay: 21s;
+        }
+
+        /* Стили для текста поверх баннера */
+        .hero-banner-section .wide-pic-with-subscription__prompt {
+            position: relative;
+            z-index: 3;
+        }
+
+        /* Улучшаем видимость профилей */
+        .profile-tag {
+            z-index: 2;
+        }
+
+        .hero-banner-text {
+            color: #fff;
+        }
+
+        .hero-banner-text .section-title__mark {
+            color: #fff;
+            margin-bottom: clamp(15px, 2vw, 25px);
+        }
+
+        .hero-banner-text .section-title__mark::before {
+            background-color: #fff;
+        }
+
+        .hero-banner-text .section-title__header {
+            color: #fff;
+            margin-bottom: clamp(15px, 2vw, 25px);
+        }
+
+        .hero-banner-text .text-size-2 {
+            color: #fff;
+        }
+
+        /* Расположение текста слева */
+        .hero-banner-section .wide-pic-with-subscription__prompt {
+            display: flex;
+            align-items: flex-start;
+            justify-content: flex-start;
+            padding-left: clamp(20px, 3vw, 60px);
+            padding-right: 50%;
+        }
+
+        @media (max-width: 768px) {
+            .hero-banner-section .wide-pic-with-subscription__prompt {
+                padding-right: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="home-page">
+        <nav class="section_half sticky-top page-nav">
+            <div class="container">
+                <div class="row">
+                    <div class="col page-nav__root">
+                        <div class="page-nav__logo-wrap">
+                            <a href="#">
+                                <img class="page-nav__logo" loading="lazy" src="images/logo.svg" alt="">
+                            </a>
+                        </div>
+                        <div class="page-nav__menu-wrap">
+                            <input type="checkbox" id="burgermenu" class="page-nav__menu-toggle-fake">
+                            <div class="page-nav__menu">
+                                <div class="page-nav__menu-header">
+                                    <label for="burgermenu" class="page-nav__side-element page-nav__side-element-icon page-nav__menu-toggle">
+                                        <img src="images/close.svg" alt="">
+                                    </label>
+                                </div>
+                                <div class="page-nav__menu-items">
+                                    <a href="#" class="page-nav__menu-item"><label for="burgermenu">О компании</label></a>
+                                    <a href="#" class="page-nav__menu-item"><label for="burgermenu">Преимущества</label></a>
+                                    <a href="#" class="page-nav__menu-item"><label for="burgermenu">Нам доверяют</label></a>
+                                    <a href="#" class="page-nav__menu-item"><label for="burgermenu">Услуги</label></a>
+                                    <a href="#" class="page-nav__menu-item"><label for="burgermenu">FAQ</label></a>
+                                    <a href="#" class="page-nav__menu-item"><label for="burgermenu">Контакты</label></a>
+                                </div>
+                                <div class="page-nav__menu-social social-links">
+                                    <a href="https://api.whatsapp.com/send/?phone=79994447980&text=Добрый+день%2C+пишу+вам+с+сайта.&type=phone_number&app_absent=0" target="_blank" class="social-links__link">
+                                        <img src="images/social/whatsapp.svg" alt="">
+                                    </a>
+                                    <a href="https://t.me/reazaresurs?text=Добрый%20день,%20пишу%20вам%20с%20сайта%20☀%EF%B8%8F" target="_blank" class="social-links__link">
+                                        <img src="images/social/telegram.svg" alt="">
+                                    </a>
+                                    <a href="#" class="social-links__link">
+                                        <img src="images/social/message.svg" alt="">
+                                    </a>
+                                </div>
+                                <div class="page-nav__menu-actions mt-4">
+                                    <a href="https://t.me/reazaresurs?text=Добрый%20день,%20пишу%20вам%20с%20сайта%20☀%EF%B8%8F" target="_blank" class="native-button">Оставить заявку</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="page-nav__side-elements">
+                            <a class="page-nav__side-element page-nav__side-element-icon" href="https://t.me/reazaresurs?text=Добрый%20день,%20пишу%20вам%20с%20сайта%20☀%EF%B8%8F" target="_blank">
+                                <img loading="lazy" src="images/social/telegram.svg" alt="">
+                            </a>
+                            <a class="page-nav__side-element page-nav__side-element-action" href="https://t.me/reazaresurs?text=Добрый%20день,%20пишу%20вам%20с%20сайта%20☀%EF%B8%8F" target="_blank">
+                                Оставить заявку
+                            </a>
+                            <label for="burgermenu" class="page-nav__side-element page-nav__side-element-icon page-nav__menu-toggle">
+                                <img src="images/burger.svg" alt="">
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Hero Section -->
+        <div class="container">
+            <section class="section hero-banner-section">
+                <div class="row section-title">
+                    <div class="col-md-7 section-title__main">
+                        <h1 class="section-title__header">
+                            <span>Аутстаффинг разработчиков и it-специалистов —</span><br>
+                            <span>быстро, прозрачно, надежно</span>
+                        </h1>
+                    </div>
+                    <div class="col section-title__second">
+                        <div class="button-row">
+                            <a href="#" class="native-button">
+                                Заполнить бриф
+                            </a>
+                            <a href="#" class="native-button native-button_outline">
+                                Скачать презентацию
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="row wide-pic-with-subscription image-fade-in" style="background-image: url(banner.png)">
+                    <div class="hero-profiles-container">
+                        <div class="profile-tag" data-profile="0">
+                            <div class="profile-avatar">FD</div>
+                            <div class="profile-info">
+                                <div class="profile-title">Frontend Developer</div>
+                                <div class="profile-skills">React, Vue, JavaScript, TypeScript</div>
+                            </div>
+                        </div>
+                        
+                        <div class="profile-tag" data-profile="1">
+                            <div class="profile-avatar">DS</div>
+                            <div class="profile-info">
+                                <div class="profile-title">Data Scientist</div>
+                                <div class="profile-skills">Python, R, TensorFlow, SQL</div>
+                            </div>
+                        </div>
+                        
+                        <div class="profile-tag" data-profile="2">
+                            <div class="profile-avatar">BA</div>
+                            <div class="profile-info">
+                                <div class="profile-title">Business Analyst</div>
+                                <div class="profile-skills">Jira, Confluence, BPMN, SQL</div>
+                            </div>
+                        </div>
+                        
+                        <div class="profile-tag" data-profile="3">
+                            <div class="profile-avatar">PM</div>
+                            <div class="profile-info">
+                                <div class="profile-title">Project Manager</div>
+                                <div class="profile-skills">Agile, Scrum, Kanban, Jira</div>
+                            </div>
+                        </div>
+                        
+                        <div class="profile-tag" data-profile="4">
+                            <div class="profile-avatar">BD</div>
+                            <div class="profile-info">
+                                <div class="profile-title">Backend Developer</div>
+                                <div class="profile-skills">Java, Python, Node.js, .NET</div>
+                            </div>
+                        </div>
+                        
+                        <div class="profile-tag" data-profile="5">
+                            <div class="profile-avatar">SA</div>
+                            <div class="profile-info">
+                                <div class="profile-title">System Administrator</div>
+                                <div class="profile-skills">Linux, Windows Server, VMware</div>
+                            </div>
+                        </div>
+                        
+                        <div class="profile-tag" data-profile="6">
+                            <div class="profile-avatar">UX</div>
+                            <div class="profile-info">
+                                <div class="profile-title">UI/UX Designer</div>
+                                <div class="profile-skills">Figma, Sketch, Adobe XD</div>
+                            </div>
+                        </div>
+                        
+                        <div class="profile-tag" data-profile="7">
+                            <div class="profile-avatar">MD</div>
+                            <div class="profile-info">
+                                <div class="profile-title">Mobile Developer</div>
+                                <div class="profile-skills">Swift, Kotlin, Flutter, React Native</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="wide-pic-with-subscription__prompt hero-banner-text">
+                        <div>
+                            <div class="section-title__mark">• КОМАНДА В ОДИН клик</div>
+                            <h2 class="section-title__header section-title__header_second">
+                                Кого вы получите в команду
+                            </h2>
+                            <div class="text-size-2">
+                                Подберём и предоставим нужных специалистов в ваш проект в течение 14 дней
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <footer class="section section_footer inverse-colors">
+        <div class="container page-footer">
+            <div class="row">
+                <div class="col-12 col-md-3">
+                    <img class="page-footer__logo" src="images/logo-white.svg" alt="">
+
+                    <h4 class="page-footer__header">Контакты</h4>
+                    <p><img src="images/phone.svg" alt=""> <a href="tel:+79994447980" class="inline-link">+7 (999) 444-79-80</a></p>
+                    <p>
+                        <img src="images/conver-white.svg" alt=""> <a href="mailto:sales@rezaresurs.ru" class="inline-link">sales@rezaresurs.ru</a>
+                    </p>
+                    <p>
+                        <img src="images/pin.svg" alt=""> Адрес офиса: 664047, Иркутск,
+                        ул.Советская, дом 3, этаж 5, офис 505
+                    </p>
+                    <div class="mt-4">
+                        <a href="#"><span class="block-underline">Политика конфиденциальности</span></a>
+                        <a href="#"><span class="block-underline">Договор оферты</span></a>
+                    </div>
+                </div>
+                <div class="col-12 col-md-9 row">
+                    <div class="col row order-4 order-md-0 mt-4">
+                        <div class="col-7 col-md-12">
+                            <h4 class="page-footer__header">О компании</h4>
+                            <a href="#">История компании</a>
+                            <a href="#">Аутсорсинг персонала на склад</a>
+                            <a href="#">Франшиза</a>
+                            <a href="#">Найти подработку</a>
+                            <a href="#">Работа у нас</a>
+                            <a href="#">Контакты</a>
+                        </div>
+                        <div class="col">
+                            <h4 class="page-footer__header">Реквизиты компании</h4>
+                            <p>ИНН: 3812530790</p>
+                            <p>ОГРН: 1193850037094</p>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-3 mt-4">
+                        <h4 class="page-footer__header">Аутсоринг</h4>
+
+                        <a href="#">Аутсорсинг производственных процессов</a>
+                        <a href="#">Аутсорсинг персонала на склад</a>
+                        <a href="#">Аутсорсинг в ритейле</a>
+                        <a href="#">Парт-тайм исполнители в магазины</a>
+                        <a href="#">Аутсорсинг в строительстве</a>
+                        <a href="#">Аутсорсинг в общественном питании</a>
+                        <a href="#">Аутсорсинг в сфере гостеприимства</a>
+
+                        <h4 class="page-footer__header mt-5">Аутстаффинг</h4>
+                        <a href="#">Аутстаффинг на производство</a>
+                        <a href="#">Аутстаффинг на сельскохоз предприятия</a>
+                    </div>
+                    <div class="col-12 col-md-6 row flex-row-reverse flex-md-row mt-4">
+                        <div class="col col-md-4">
+                            <h4 class="page-footer__header">Филиалы</h4>
+                            <a href="#">Технологии</a>
+                            <a href="#">Тарифы</a>
+                            <a href="#">Блог</a>
+                            <a href="#">Контакты</a>
+                        </div>
+                        <div class="col-7 col-md-8">
+                            <h4 class="page-footer__header">Другие услуги</h4>
+                            <a href="#">Кадровое агентство</a>
+                            <a href="#">Массовый подбор и рекрутинг</a>
+                            <a href="#">Организация северных вахт</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
+

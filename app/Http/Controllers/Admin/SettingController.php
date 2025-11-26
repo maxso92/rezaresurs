@@ -22,6 +22,8 @@ class SettingController extends Controller
             'cookie_enabled' => 'nullable|boolean',
             'bitrix_url' => 'nullable|url',
             'yandex_metrica_code' => 'nullable|string',
+            'telegram_callback_token' => 'nullable|string|max:255',
+            'telegram_callback_id' => 'nullable|string|max:255',
             'favicon' => 'nullable|image|mimes:png,jpg,ico|max:2048',
         ]);
 
@@ -46,6 +48,8 @@ class SettingController extends Controller
         Setting::setValue('cookie_enabled', $request->has('cookie_enabled') ? '1' : '0');
         Setting::setValue('bitrix_url', $request->input('bitrix_url'));
         Setting::setValue('yandex_metrica_code', $request->input('yandex_metrica_code'));
+        Setting::setValue('telegram_callback_token', $request->input('telegram_callback_token'));
+        Setting::setValue('telegram_callback_id', $request->input('telegram_callback_id'));
 
         return redirect()->route('admin.settings.index')->with('success', 'Настройки успешно обновлены');
     }

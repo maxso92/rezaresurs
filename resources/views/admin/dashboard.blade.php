@@ -61,6 +61,31 @@
         </div>
     </div>
 
+    <!-- Заявки -->
+    <div class="col-md-6 col-lg-4">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex align-items-center justify-content-between">
+                    <div>
+                        <h4 class="card-title mb-2">Заявки</h4>
+                        <p class="text-muted mb-0">Заявки с главной страницы</p>
+                    </div>
+                    <div class="avatar avatar-lg">
+                        <span class="avatar-text rounded-circle bg-warning bg-opacity-10 text-warning">
+                            <span class="material-symbols-rounded fs-2">inbox</span>
+                        </span>
+                    </div>
+                </div>
+                <div class="mt-4">
+                    <a href="{{ route('admin.applications.index') }}" class="btn btn-warning btn-sm">
+                        Перейти
+                        <span class="material-symbols-rounded ms-1 align-middle" style="font-size: 18px;">arrow_forward</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Сайт -->
     <div class="col-md-6 col-lg-4">
         <div class="card">
