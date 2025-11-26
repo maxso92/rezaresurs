@@ -39,7 +39,6 @@
         if ($pageAlias) {
             $page = \App\Models\Page::where('alias', $pageAlias)
                 ->where('is_published', true)
-                ->select('title', 'seo_keyword', 'seo_description', 'seo_social_title', 'seo_social_description', 'cover_image')
                 ->first();
             
             if ($page) {

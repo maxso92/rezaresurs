@@ -1,6 +1,7 @@
 import './bootstrap';
 import { createApp } from 'vue';
 import { createRouter, createWebHistory } from 'vue-router';
+import axios from 'axios';
 import App from './components/App.vue';
 import Home from './components/Home.vue';
 import About from './components/About.vue';
@@ -31,6 +32,65 @@ const router = createRouter({
             component: PageView
         }
     ]
+});
+
+// Navigation guard для проверки редиректов
+router.beforeEach(async (to, from, next) => {
+    try {
+        // Определяем alias для проверки редиректа
+        let alias = to.path === '/' ? 'home' : to.path.replace(/^\//, '');
+        
+        // Для статических страниц используем их путь как alias
+        // Для главной страницы пробуем несколько алиасов
+        if (to.path === '/') {
+            // Пробуем разные алиасы для главной
+            const aliasesToTry = ['home', 'index', 'main', 'glavnaya'];
+            for (const tryAlias of aliasesToTry) {
+                try {
+                    const response = await axios.get(`/api/pages/${tryAlias}/redirect`);
+                    if (response.data && response.data.has_redirect && response.data.redirect_url) {
+                        const redirectUrl = response.data.redirect_url;
+                        if (redirectUrl.startsWith('http://') || redirectUrl.startsWith('https://')) {
+                            window.location.href = redirectUrl;
+                            return;
+                        }
+                        next(redirectUrl);
+                        return;
+                    }
+                } catch (e) {
+                    // Продолжаем пробовать следующий алиас
+                }
+            }
+        } else {
+            // Для других страниц проверяем редирект
+            const response = await axios.get(`/api/pages/${alias}/redirect`);
+            
+            if (response.data && response.data.has_redirect && response.data.redirect_url) {
+                const redirectUrl = response.data.redirect_url;
+                const currentUrl = window.location.origin + to.fullPath;
+                
+                // Проверяем, что редирект не ведет на тот же URL
+                if (redirectUrl !== currentUrl) {
+                    // Если это внешний URL, делаем полный редирект
+                    if (redirectUrl.startsWith('http://') || redirectUrl.startsWith('https://')) {
+                        window.location.href = redirectUrl;
+                        return;
+                    }
+                    
+                    // Если это относительный URL, используем router.push
+                    next(redirectUrl);
+                    return;
+                }
+            }
+        }
+        
+        // Если редиректа нет, продолжаем навигацию
+        next();
+    } catch (error) {
+        // В случае ошибки продолжаем навигацию
+        console.error('Ошибка проверки редиректа:', error);
+        next();
+    }
 });
 
 // Создание приложения

@@ -15,9 +15,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // Запускаем сидер для создания администратора
+        // Запускаем сидеры
         $this->call([
             AdminUserSeeder::class,
+            ContactsPageSeeder::class,
         ]);
     }
 }

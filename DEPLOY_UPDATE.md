@@ -94,16 +94,16 @@ $PHP_PATH artisan migrate --force
 
 ```bash
 # Очищаем весь кеш
-$PHP_PATH artisan config:clear
-$PHP_PATH artisan route:clear
-$PHP_PATH artisan view:clear
-$PHP_PATH artisan cache:clear
+php artisan config:clear
+php artisan route:clear
+php artisan view:clear
+php artisan cache:clear
 
 # Пересоздаем кеш для продакшена
-$PHP_PATH artisan config:cache
-$PHP_PATH artisan route:cache
-$PHP_PATH artisan view:cache
-$PHP_PATH artisan event:cache
+php artisan config:cache
+php artisan route:cache
+php artisan view:cache
+php artisan event:cache
 ```
 
 ---

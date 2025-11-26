@@ -53,4 +53,45 @@ class PageController extends Controller
             
         return response()->json($page);
     }
+
+    public function checkRedirect($alias)
+    {
+        // Декодируем alias (может быть закодирован как %2F для главной)
+        $alias = urldecode($alias);
+        
+        // Для главной страницы пробуем несколько алиасов
+        if ($alias === '' || $alias === '/' || $alias === '%2F') {
+            $aliasesToTry = ['home', 'index', 'main', 'glavnaya'];
+            foreach ($aliasesToTry as $tryAlias) {
+                $page = Page::where('alias', $tryAlias)
+                    ->whereNotNull('redirect_url')
+                    ->where('redirect_url', '!=', '')
+                    ->first();
+                
+                if ($page && $page->redirect_url) {
+                    return response()->json([
+                        'has_redirect' => true,
+                        'redirect_url' => trim($page->redirect_url)
+                    ]);
+                }
+            }
+        } else {
+            $page = Page::where('alias', $alias)
+                ->whereNotNull('redirect_url')
+                ->where('redirect_url', '!=', '')
+                ->first();
+            
+            if ($page && $page->redirect_url) {
+                return response()->json([
+                    'has_redirect' => true,
+                    'redirect_url' => trim($page->redirect_url)
+                ]);
+            }
+        }
+        
+        return response()->json([
+            'has_redirect' => false,
+            'redirect_url' => null
+        ]);
+    }
 }

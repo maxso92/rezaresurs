@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Api\PageController as ApiPageController;
 use App\Http\Controllers\Api\ContactController;
 use App\Http\Controllers\Api\ApplicationController as ApiApplicationController;
+use App\Http\Controllers\AppController;
 
 // Тестовая страница иконок
 Route::get('/test-icons', function () {
@@ -16,15 +17,14 @@ Route::get('/test-icons', function () {
 });
 
 // Главная страница (Vue SPA)
-Route::get('/', function () {
-    return view('app');
-});
+Route::get('/', [AppController::class, 'index']);
 
 // API роуты для Vue frontend
 Route::prefix('api')->group(function () {
     Route::get('/pages', [ApiPageController::class, 'index']);
     Route::get('/pages/{alias}', [ApiPageController::class, 'show']);
     Route::get('/pages/{alias}/seo', [ApiPageController::class, 'seo']);
+    Route::get('/pages/{alias}/redirect', [ApiPageController::class, 'checkRedirect']);
     Route::post('/contact', [ContactController::class, 'submit']);
     Route::post('/applications', [ApiApplicationController::class, 'store']);
 });
@@ -75,6 +75,4 @@ Route::prefix('admin')->group(function () {
 });
 
 // Catch-all route для Vue Router (должен быть последним)
-Route::get('/{any}', function () {
-    return view('app');
-})->where('any', '^(?!admin|api).*$');
+Route::get('/{any}', [AppController::class, 'index'])->where('any', '^(?!admin|api).*$');
