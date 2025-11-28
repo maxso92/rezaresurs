@@ -554,7 +554,7 @@
           <div class="col-md-6 mt section-title__main">
             <div class="section-title__mark">частые вопросы</div>
             <h1 class="section-title__header section-title__header_second">
-              Что нужно знать об аутстаффинге и <br />работе с РЕЗАРЕСУРС»:
+              Что нужно знать об аутстаффинге и <br />работе с РЕЗАРЕСУРС:
               самые <br />
               популярные вопросы
             </h1>
@@ -1254,11 +1254,51 @@ export default {
       });
       
       images.forEach(image => observer.observe(image));
+    },
+    setupScrollSave() {
+      // Сохраняем позицию скролла при прокрутке
+      let scrollTimeout;
+      const saveScrollPosition = () => {
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(() => {
+          sessionStorage.setItem('homeScrollPosition', window.scrollY.toString());
+        }, 100);
+      };
+      
+      window.addEventListener('scroll', saveScrollPosition, { passive: true });
+      
+      // Сохраняем обработчик для удаления
+      this.scrollSaveHandler = saveScrollPosition;
+    },
+    restoreScrollPosition() {
+      // Проверяем, была ли это перезагрузка страницы
+      const navigationType = performance.getEntriesByType('navigation')[0]?.type || 
+                            (performance.navigation ? ['navigate', 'reload', 'back_forward'][performance.navigation.type] : 'navigate');
+      
+      // Восстанавливаем позицию только при перезагрузке страницы
+      if (navigationType === 'reload') {
+        const savedPosition = sessionStorage.getItem('homeScrollPosition');
+        if (savedPosition) {
+          // Небольшая задержка для загрузки контента
+          this.$nextTick(() => {
+            setTimeout(() => {
+              window.scrollTo(0, parseInt(savedPosition, 10));
+            }, 100);
+          });
+        }
+      }
     }
   },
   mounted() {
     this.recalculateSlider();
     this.loadSeoTags();
+    
+    // Восстанавливаем позицию скролла при обновлении
+    this.restoreScrollPosition();
+    
+    // Сохраняем позицию скролла при прокрутке
+    this.setupScrollSave();
+    
     // Плавное появление формы заявки при прокрутке
     this.$nextTick(() => {
       this.initFormVisibility();
@@ -1267,7 +1307,13 @@ export default {
       this.initServicesAnimation();
       this.initImagesAnimation();
     });
-  }
+  },
+  beforeUnmount() {
+    // Удаляем обработчик скролла
+    if (this.scrollSaveHandler) {
+      window.removeEventListener('scroll', this.scrollSaveHandler);
+    }
+  },
 }
 </script>
 

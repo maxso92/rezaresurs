@@ -93,6 +93,14 @@ router.beforeEach(async (to, from, next) => {
     }
 });
 
+// Обработка скролла при переходе между страницами
+router.afterEach((to, from) => {
+    // При переходе на другие страницы (не главную) - скроллим наверх
+    if (to.path !== '/') {
+        window.scrollTo(0, 0);
+    }
+});
+
 // Создание приложения
 const app = createApp(App);
 app.use(router);

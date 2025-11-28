@@ -109,7 +109,7 @@
                         <h3 class="contacts-block__title" style="margin-bottom: 0;">Присоединяйтесь к нам</h3>
                       </div>
                       <div class="contacts-block__content">
-                        <p><a href="tel:+79998888888">+7 (999) 888-88-88</a></p>
+                        <p><a href="tel:+79398877623">+7 (939)-887-76-23</a></p>
                         <p><a href="mailto:hr@rezaresurs.ru">hr@rezaresurs.ru</a></p>
                       </div>
                     </div>
